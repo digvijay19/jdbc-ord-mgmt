@@ -1,38 +1,37 @@
 package digvijag.lib;
 
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
-public class OrderManagementTest {
+import static junit.framework.Assert.assertEquals;
+
+public class MariaDBTest {
     MariadbConnection mariadbConnection = new MariadbConnection();
     Connection connection;
-    ResultSet rs;
     Statement statement;
 
     @Before
     public void setUp() throws Exception {
         connection = mariadbConnection.getDbConnection();
         statement = connection.createStatement();
-        rs = null;
+        statement.execute("create table DDLTest(columnOne int,columnTwo varchar(20));");
     }
 
     @After
     public void tearDown() throws Exception {
-        rs.close();
+        statement.execute("drop table DDLTest");
         statement.close();
         mariadbConnection.closeConnection(connection);
     }
 
     @Test
-    public void test_select_products_from_order_management() throws SQLException {
-        rs = statement.executeQuery("select * from products");
-        Assert.assertNotNull(rs);
+    public void test_insert_row_in_table() throws SQLException {
+        String query = "insert into DDLTest values(1,\"test\");";
+        int expected = 1;
+        int actual =  statement.executeUpdate(query);
+        assertEquals(expected , actual);
     }
 }

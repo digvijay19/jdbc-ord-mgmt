@@ -7,7 +7,7 @@ public class MariadbConnection {
     public Connection getDbConnection() {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/order_management", "digvijay", "password");
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test", "digvijay", "password");
         } catch (SQLException e) {
             e.printStackTrace();
         }
