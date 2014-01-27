@@ -75,4 +75,15 @@ public class MariaDBTest {
         resultSet.close();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void test_delete_from_table() throws SQLException {
+        String insertQuery = "insert into DMLTest values(1,\"test\");";
+        String deleteQuery = "delete from DMLTest where columnOne=1";
+        int expected = 1;
+        int actual;
+        statement.executeQuery(insertQuery);
+        actual = statement.executeUpdate(deleteQuery);
+        assertEquals(expected, actual);
+    }
 }
